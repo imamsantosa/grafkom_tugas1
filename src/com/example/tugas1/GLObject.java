@@ -1,6 +1,5 @@
 package com.example.tugas1;
 
-import java.io.Console;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -8,7 +7,6 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLES20;
-import android.util.Log;
 
 public class GLObject {
 	
@@ -205,10 +203,10 @@ public class GLObject {
 		
 		// menentukan titik-titik sudut segitiga siku siku
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, makeFloatBuffer(new float []{
-				-1.0f, -1.0f, 0.0f, // v1 - segitiga 1
-				-0.4f, -1.0f, 0.0f, // v2 - segitiga 1 & 2
-				-1.0f, -0.6f, 0.0f, // v3 - segitiga 1 & 2
-				-0.4f, -0.6f, 0.0f, // v2 - segitiga 2
+				-0.35f, -0.3f, 0.0f, // v1 - segitiga 1
+				 0.25f, -0.3f, 0.0f, // v2 - segitiga 1 & 2
+				-0.35f,  0.1f, 0.0f, // v3 - segitiga 1 & 2
+				 0.25f,  0.1f, 0.0f, // v2 - segitiga 2
 		}));
 		
 		// memberi warna persegi
@@ -234,9 +232,9 @@ public class GLObject {
 		
 		// menentukan titik-titik sudut segitiga sama kaki
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, makeFloatBuffer(new float []{
-				-1.1f, -0.6f, 0.0f, // v1 
-				-0.3f, -0.6f, 0.0f, // v2 
-				-0.7f, -0.3f, 0.0f, // v3 
+				-0.45f,  0.1f, 0.0f, // v1 
+				 0.35f,  0.1f, 0.0f, // v2 
+				-0.05f,  0.4f, 0.0f, // v3 
 		}));
 		
 		// memberi warna segitiga
@@ -259,10 +257,10 @@ public class GLObject {
 		
 		// menentukan titik-titik sudut segitiga siku siku
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, makeFloatBuffer(new float []{
-				-0.55f, -0.6f,  0.0f, // v1 - segitiga 1
-				-0.55f, -0.35f, 0.0f, // v2 - segitiga 1 & 2
-				-0.48f, -0.6f,  0.0f, // v3 - segitiga 1 & 2
-				-0.48f, -0.35f, 0.0f, // v2 - segitiga 2
+				0.10f, 0.10f,  0.0f, // v1 - segitiga 1
+				0.10f, 0.35f, 0.0f, // v2 - segitiga 1 & 2
+				0.17f, 0.10f,  0.0f, // v3 - segitiga 1 & 2
+				0.17f, 0.35f, 0.0f, // v2 - segitiga 2
 		}));
 		
 		// memberi warna persegi
@@ -288,10 +286,10 @@ public class GLObject {
 		
 		// menentukan titik-titik sudut segitiga siku siku
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, makeFloatBuffer(new float []{
-				-0.75f, -1.00f, 0.0f, // v1 - segitiga 1
-				-0.75f, -0.85f, 0.0f, // v2 - segitiga 1 & 2
-				-0.65f, -1.00f, 0.0f, // v3 - segitiga 1 & 2
-				-0.65f, -0.85f, 0.0f, // v2 - segitiga 2
+				-0.10f, -0.30f, 0.0f, // v1 - segitiga 1
+				-0.10f, -0.15f, 0.0f, // v2 - segitiga 1 & 2
+				 0.00f, -0.30f, 0.0f, // v3 - segitiga 1 & 2
+				 0.00f, -0.15f, 0.0f, // v2 - segitiga 2
 		}));
 		
 		// memberi warna persegi
@@ -348,7 +346,7 @@ public class GLObject {
         gl.glLineWidth(5.0f);
         
         //menggambar lingkaran
-        gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, byk_vertices);
+        gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, byk_vertices);
 
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 	}
@@ -403,4 +401,5 @@ public class GLObject {
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
 	}
+
 }

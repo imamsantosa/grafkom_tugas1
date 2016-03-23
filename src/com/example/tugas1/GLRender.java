@@ -2,33 +2,96 @@ package com.example.tugas1;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
+import android.util.Log;
 
 public class GLRender implements Renderer {
 	private GLObject object;
-	int RunMode = 1;
+	private float speedBesar = 2.0f;
+	private int RunMode = 1;
 	// Angle in degrees
-	float AngleKincirBesar = 0.0f;
-	float AngleKincirKecil = 0.0f;
-
+	private float AngleKincirBesar = 0.0f;
+	private float AngleKincirKecil = 0.0f;
+	private float sumbu_x = 0.0f;
+	private float sumbu_y = 0.0f;
+	private float motion = 0.02f;
+	private float angle_rumah = 0.0f;
+	int height;
+	int width;
+	int x;
+	int y;
+	
 	public GLRender() {
 		this.object = new GLObject();
 	}
-
+	
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glLoadIdentity();
+		Log.d("x = ", String.valueOf(x));
+		Log.d("y = ", String.valueOf(y));
+		
 		kincir(gl);
-		rumah(gl);
+		
+		gl.glPushMatrix();
+			gl.glTranslatef(0.0f, 0.0f, 0.0f);
+			gl.glTranslatef(sumbu_x, sumbu_y, 0.0f);
+			rumah(gl);
+		gl.glPopMatrix();
+		
+		
 		lingkaran(gl);
 		persegiPanjang(gl);
 		kontrol(gl);
 		
 	}
 	
+	/**
+	 * action for move to up of house
+	 */
+	public void moveUp(){
+		sumbu_y += motion;
+	}
+	
+	/**
+	 * action for move to down of house
+	 */
+	public void moveDown(){
+		sumbu_y -= motion;
+	}
+	
+	/**
+	 * action for move to right of house
+	 */
+	public void moveRight(){
+		sumbu_x += motion;
+	}
+	
+	/**
+	 * action for move to left of house
+	 */
+	public void moveLeft(){
+		sumbu_x -= motion;
+	}
+	
+	/**
+	 * action for rotate of house
+	 */
+	public void rotate(){
+		angle_rumah += 2.0f;
+		if (angle_rumah > 360.0) {
+			angle_rumah = 0.0f;
+			angle_rumah += 2.0f;
+		}
+	}
+	
+	/**
+	 * to make control button object
+	 * @param gl
+	 */
 	private void kontrol(GL10 gl){
 		//panah atas
 		gl.glPushMatrix();
@@ -69,6 +132,10 @@ public class GLRender implements Renderer {
 		gl.glPopMatrix();
 	}
 	
+	/**
+	 * to make rectangle object
+	 * @param gl
+	 */
 	private void  persegiPanjang(GL10 gl){
 		gl.glPushMatrix();
 			gl.glTranslatef(-0.5f, 3.0f, -5.0f);
@@ -77,6 +144,10 @@ public class GLRender implements Renderer {
 		gl.glPopMatrix();
 	}
 	
+	/**
+	 * to make circle object
+	 * @param gl
+	 */
 	private void lingkaran(GL10 gl){
 		gl.glPushMatrix();
 			gl.glTranslatef(0.0f, 0.0f, -5.0f);
@@ -86,38 +157,48 @@ public class GLRender implements Renderer {
 		gl.glPopMatrix();
 	}
 	
+	/**
+	 * to make house object
+	 * @param gl
+	 */
 	private void rumah(GL10 gl){
-		float skala = 1.5f;
-		float posisi_x = -1.3f;
-		float posisi_y = -0.5f;
+		float skala = 1.8f;
+		float posisi_x = -2.3f;
+		float posisi_y = -1.0f;
 		
 		gl.glPushMatrix();
 			gl.glTranslatef(posisi_x, posisi_y, -5.0f);
 			gl.glScalef(skala, skala, skala);
+			gl.glRotatef(angle_rumah, 0.0f, 0.0f, 1.0f);
 			object.tembok_rumah(gl);
 		gl.glPopMatrix();
 		
 		gl.glPushMatrix();
 			gl.glTranslatef(posisi_x, posisi_y, -5.0f);
 			gl.glScalef(skala, skala, skala);
+			gl.glRotatef(angle_rumah, 0.0f, 0.0f, 1.0f);
 			object.pintu_rumah(gl);
 		gl.glPopMatrix();
 					
 		gl.glPushMatrix();
 			gl.glTranslatef(posisi_x, posisi_y, -5.0f);
 			gl.glScalef(skala, skala, skala);
+			gl.glRotatef(angle_rumah, 0.0f, 0.0f, 1.0f);
 			object.cerobong_asap_rumah(gl);
 		gl.glPopMatrix();
 	
 		gl.glPushMatrix();
 			gl.glTranslatef(posisi_x, posisi_y, -5.0f);
 			gl.glScalef(skala, skala, skala);
+			gl.glRotatef(angle_rumah, 0.0f, 0.0f, 1.0f);
 			object.atap_rumah(gl);
 		gl.glPopMatrix();
-		
-		
 	}
-
+	
+	/**
+	 * to make windmill object
+	 * @param gl
+	 */
 	private void kincir(GL10 gl) {
 		// membuat segitiga untuk kincir
 		gl.glPushMatrix();
@@ -134,6 +215,7 @@ public class GLRender implements Renderer {
 		gl.glRotatef(-AngleKincirBesar, 0.0f, 0.0f, 1.0f);
 		object.persegi_panjang_kincir_besar(gl);
 		gl.glPopMatrix();
+		
 		gl.glPushMatrix();
 		gl.glTranslatef(0.0f, 0.0f, -5.0f);
 		gl.glRotatef(-AngleKincirBesar, 0.0f, 0.0f, 1.0f);
@@ -143,16 +225,17 @@ public class GLRender implements Renderer {
 
 		// membuat baling baling kecil 1
 		gl.glPushMatrix();
-			// diputar dulu (pada ukuran sebenarnya)
+			// diputar lagi agar mengikuti kincir besar
 			gl.glRotatef(-AngleKincirBesar, 0.0f, 0.0f, 1.0f);
 			// dipindah posisinya pada kincir atas
 			gl.glTranslatef(0.0f, 0.7f, -5.0f);
-			// dikecilkan
+			// setelah diputar baru dikecilkan
 			gl.glScalef(0.5f, 0.5f, 0.5f);
-			// diputar setelah dikecilkan
+			// diputar dulu objeknya
 			gl.glRotatef(-AngleKincirKecil, 0.0f, 0.0f, 1.0f);
 			object.persegi_panjang_kincir_kecil(gl);
 		gl.glPopMatrix();
+		
 		gl.glPushMatrix();
 		gl.glRotatef(-AngleKincirBesar, 0.0f, 0.0f, 1.0f);
 		gl.glTranslatef(0.0f, 0.7f, -5.0f);
@@ -251,7 +334,7 @@ public class GLRender implements Renderer {
 
 		if (RunMode == 1) {
 			// re-Calculate animation parameters
-			float speedBesar = 2.0f;
+			
 			AngleKincirBesar += speedBesar;
 			if (AngleKincirBesar > 360.0) {
 				AngleKincirBesar = 0.0f;
@@ -271,10 +354,14 @@ public class GLRender implements Renderer {
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		// Prevent A Divide By Zero By
-		if (height == 0) {
+		/**if (height == 0) {
 			// Making Height Equal One
 			height = 1;
-		}
+		}*/
+		
+		this.width = width;
+		this.height = height;
+		
 		// Reset The Current Viewport
 		gl.glViewport(0, 0, width, height);
 		// Select The Projection Matrix
