@@ -24,11 +24,11 @@ public class ESRender extends GLSurfaceView{
 				//glrender.setRunMode(Math.abs(glrender.getRunMode()-1)); 
 				requestRender();
 		}
-		update(v);
+		kontrol(v);
 		return true; 
 	}
 	
-	public void update(MotionEvent event){
+	public void kontrol(MotionEvent event){
 		Point _touchingPoint = new Point(1013, 500);
 		
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
