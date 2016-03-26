@@ -320,17 +320,43 @@ public class GLObject {
         
 		// menentukan titik-titik sudut persegi
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, makeFloatBuffer(new float []{
-				-1.0f, -1.0f, 0.0f, // v1 
-				-1.0f, -0.6f, 0.0f, // v3 
-				-0.4f, -0.6f, 0.0f, // v2 
-				-0.4f, -1.0f, 0.0f, // v2 
-				
+				-0.6f,  0.4f, 0.0f, //v1
+				 0.6f,  0.4f, 0.0f, //v2
+				 0.6f, -0.4f, 0.0f, //v3
+				-0.6f, -0.4f, 0.0f, //v4			
 		}));
 		
 		//menggambar persegi dengan line loop
 		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, 4);
 		
+		// mewarnai garis line
+        gl.glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+        
+        //membuat garis putus putus menggunakan method LineStripes
+        for (float x = -0.58f; x <= 0.58f; x+=0.1f) {
+			for (float y = -0.38f; y <= 0.38f; y+=0.03f) {
+				lineStripes(gl, x, y);
+			}
+		}
+        
+        for (float y = -0.38f; y <= 0.38f; y+=0.1f) {
+			for (float x = -0.58f; x <= 0.58f; x+=0.03f) {
+				lineStripes(gl, x, y);
+			}
+		}
+        
+		
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+	}
+	
+	private void lineStripes(GL10 gl, float x, float y){
+		
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, makeFloatBuffer(new float []{
+				x, y, 0.0f,
+		}));
+		
+		gl.glDrawArrays(GL10.GL_POINTS, 0, 1);
+		
 	}
 	
 	public void lingkaran(GL10 gl){

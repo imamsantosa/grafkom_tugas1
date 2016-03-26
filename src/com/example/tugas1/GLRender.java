@@ -31,20 +31,16 @@ public class GLRender implements Renderer {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glLoadIdentity();
-		Log.d("x = ", String.valueOf(x));
-		Log.d("y = ", String.valueOf(y));
+		
+		lingkaran(gl);
+		persegiPanjang(gl);
 		
 		kincir(gl);
-		
 		gl.glPushMatrix();
 			gl.glTranslatef(0.0f, 0.0f, 0.0f);
 			gl.glTranslatef(sumbu_x, sumbu_y, 0.0f);
 			rumah(gl);
 		gl.glPopMatrix();
-		
-		
-		lingkaran(gl);
-		persegiPanjang(gl);
 		kontrol(gl);
 		
 	}
@@ -138,8 +134,8 @@ public class GLRender implements Renderer {
 	 */
 	private void  persegiPanjang(GL10 gl){
 		gl.glPushMatrix();
-			gl.glTranslatef(-0.5f, 3.0f, -5.0f);
-			gl.glScalef(3.0f, 3.0f, 3.0f);
+			gl.glTranslatef(-2.7f, 1.0f, -5.0f);
+			//gl.glScalef(3.0f, 3.0f, 3.0f);
 			object.persegi_panjang(gl);
 		gl.glPopMatrix();
 	}
