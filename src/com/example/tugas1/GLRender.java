@@ -31,11 +31,10 @@ public class GLRender implements Renderer {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glLoadIdentity();
+		kincir(gl);
 		
 		lingkaran(gl);
 		persegiPanjang(gl);
-		
-		kincir(gl);
 		gl.glPushMatrix();
 			gl.glTranslatef(0.0f, 0.0f, 0.0f);
 			gl.glTranslatef(sumbu_x, sumbu_y, 0.0f);
